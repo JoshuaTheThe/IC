@@ -61,7 +61,7 @@ _IC_I:    # Initialize function table
         xorl    %eax,   %eax
         movq    %rax,   _P
         # Read
-        read    $stdin, (_PROG), $65535
+        read    $stdin, (_PROG), $4095
         movq    %rax,   (_SZ)
         leaq    _PROG,  %r12
 .LL:    # Start grabbing from buffer
@@ -78,10 +78,16 @@ _IC_R:  movb    (%r12), %al
         return  %rax
 _S0:    .asciz " [PANIC] Function is not implemented for symbol\n\00"
 _S0E:
+_KLONG: .asciz "LONG\00"
+_KIF:   .asciz "IF\00"
+_KWHILE:.asciz "WHILE\00"
+_KRETUR:.asciz "RETURN\00"
+_HEX:   .asciz "0123456789ABCDEF"
         .section .bss
 _P:     .quad   00
 _FNT:   .space  2048
 _DC:    .byte   00
 _ID:    .space  256
 _SZ:    .space  8
-_PROG:  .space 65536 # MAX PROGRAM SIZE
+_PROG:  .space 4096 # MAX PROGRAM SIZE
+_PXBUF: .space  16

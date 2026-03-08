@@ -56,7 +56,7 @@ _IC_II: cmpb    $65,    %al
 _IC_W:  return $tok_ignore
         # Number, read while its a number
 _IC_N:  unget
-        xorq    %r11,   %r11
+        xorq    %r15,   %r15
 _IC_NL: call    _IC_R
         bc      e,_IC_NX, %rax
         # Fetch Char
@@ -68,14 +68,16 @@ _IC_NL: call    _IC_R
         bc      c,_IC_NX
         # Otherwise, accumulate in R11
         movq    $10,    %rbx
-        imulq   %rbx,   %r11
+        imulq   %rbx,   %r15
         subb    $48,    %al
-        addq    %rax,   %r11
+        addq    %rax,   %r15
         jmp     _IC_NL
 _IC_NX: unget
+        movq    %r15,   %rdi
+        call    _IC_PX
         return $tok_number
 _IC_ID: unget
-        xorq    %r11,   %r11    # LENGTH
+        xorq    %r15,   %r15    # LENGTH
 _IC_IL: call    _IC_R
         bc      e,_IC_IDX, %rax
         # Fetch Char
@@ -86,9 +88,48 @@ _IC_IL: call    _IC_R
         # If non number, exit
         bc      c,_IC_IDX
         # Accumulate
-        movb    %al,    _ID(%r11)
-        incb    %r11b
-        cmpb    $254,   %r11b
+        movb    %al,    _ID(%r15)
+        incb    %r15b
+        cmpb    $254,   %r15b
         jb      _IC_IL
 _IC_IDX:unget
+        # You could probably roll this into a loop
+        # oh well
+        # COMPARE WITH KEYWORDS
+        cmpq    $4,     %r11
+        jne     .M0
+        leaq    _ID,    %rdi
+        leaq    _KLONG, %rsi
+        xorl    %ecx,   %ecx
+        movb    $4,     %cl
+        repe    cmpsb
+        retucc z,$tok_kw_long
+.M0:    # EARLY NEXT
+        cmpq    $2,     %r11
+        jne     .M1
+        leaq    _ID,    %rdi
+        leaq    _KIF,   %rsi
+        xorl    %ecx,   %ecx
+        movb    $2,     %cl
+        repe    cmpsb
+        retucc z,$tok_kw_if
+.M1:    # EARLY NEXT
+        cmpq    $5,     %r11
+        jne     .M2
+        leaq    _ID,    %rdi
+        leaq    _KWHILE,   %rsi
+        xorl    %ecx,   %ecx
+        movb    $5,     %cl
+        repe    cmpsb
+        retucc z,$tok_kw_while
+.M2:    # EARLY NEXT
+        cmpq    $6,     %r11
+        jne     .M3
+        leaq    _ID,    %rdi
+        leaq    _KRETUR,   %rsi
+        xorl    %ecx,   %ecx
+        movb    $6,     %cl
+        repe    cmpsb
+        retucc z,$tok_kw_return
+.M3:    # EARLY NEXT
         return $tok_identifier
