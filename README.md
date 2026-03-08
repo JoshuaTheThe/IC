@@ -5,28 +5,28 @@
 - comma and semi colon are aliases of eachother, use whichever you want
 
 ## Keywords
-- long, if, while, return
+- LONG, IF, WHILE, RETURN
 
 ## Symbols
 - to decide whether to call or not is whether the symbol is a function or variable
   - this does make function pointers not default, prefix with `&` to get address
 
 ```c
-long x = 42;
-long y = x + 7; // one at a time
+LONG X = 42;
+LONG Y = X + 7; // one at a time
 
-long add(a, b)( a + b, ),
-long main()(add(1,2)),
+LONG ADD(a, b)( a + b, ),
+LONG MAIN()(ADD(1,2)),
 
-long p = &x;
-long v = *p;
+LONG p = &x;
+LONG v = *p;
 *p = 99;
 
 // if — expression, evaluates to branch taken (0 if cond false, no else given)
-if(!(x - y), then_expr, else_expr)
+IF(!(x - y), then_expr, else_expr)
 
 // while — expression, evaluates to last body value, 0 if never entered
-while(cond, body)
+WHILE(cond, body)
 
 // PEMDAS arithmetic + unary
 x + y * (z - 2)
