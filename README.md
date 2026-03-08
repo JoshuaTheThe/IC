@@ -12,16 +12,16 @@
   - this does make function pointers not default, prefix with `&` to get address
 
 ```c
-LONG X = 42,
-LONG Y = X + 7, // one at a time
+LONG X : 42,
+LONG Y : X + 7, // one at a time
 LONG ADD(A, B)( A + B, ),
 LONG MAIN()(ADD(1,2),),
 
-LONG P = &X;
-LONG V = *P;
-*P = 99;
+LONG P : &X;
+LONG V : *P;
+*P : 99;
 
-IF(X == Y, then_expr, else_expr)
+IF(X = Y, then_expr, else_expr)
 WHILE(C, B)
 X + Y * (Z - 2)
 !(X)        // logical not — nonzero becomes 0, zero becomes 1
@@ -55,8 +55,8 @@ Written in x86-64 Linux assembly. Output is GAS syntax piped to stdout, assemble
 | `!` | unary logical not |
 | `<` | less than |
 | `>` | greater than |
-| `==` | equal to |
-| `=` | assign to |
+| `=` | equal to |
+| `:` | assign to |
 
 ## Why?
 - Because assembly is fun!!

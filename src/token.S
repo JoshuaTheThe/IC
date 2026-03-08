@@ -5,6 +5,24 @@
         .equ    tok_lparen,3
         .equ    tok_rparen,4
         .equ    tok_end,5 # ,
+        .equ    tok_add,6
+        .equ    tok_sub,7
+        .equ    tok_asterisk,8
+        .equ    tok_slash,9
+        .equ    tok_percent,10
+        .equ    tok_amp,11
+        .equ    tok_caret,12
+        .equ    tok_pipe,13
+        .equ    tok_bang,14
+        .equ    tok_lt,15
+        .equ    tok_gt,16
+        .equ    tok_eq,17
+        .equ    tok_set,18
+        
+        .equ    tok_kw_long,19
+        .equ    tok_kw_if,20
+        .equ    tok_kw_while,21
+        .equ    tok_kw_return,22
 
 _IC_LP: return $tok_lparen
 _IC_RP: return $tok_rparen
