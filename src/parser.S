@@ -1,12 +1,11 @@
         # PARSER FUNCTIONS
 _IC_HASH:
         xorq    %rax,   %rax
-        xorq    %rcx,   %rcx
-.LH:    movzbl  _ID(%rcx), %edx
-        imulq   %rcx,   %rdx        # char * index
-        addq    %rdx,   %rax        # accumulate
+        movb    $1,     %cl
+.LH:    movzbl  _ID-1(%rcx), %edx
+        imulq   %rcx,   %rdx
+        addq    %rdx,   %rax
         incq    %rcx
         cmpq    %r11,   %rcx
-        jl      .LH
+        jle     .LH
         ret
-        
