@@ -12,9 +12,8 @@
   - this does make function pointers not default, prefix with `&` to get address
 
 ```c
-LONG X = 42;
-LONG Y = X + 7; // one at a time
-
+LONG X = 42,
+LONG Y = X + 7, // one at a time
 LONG ADD(a, b)( a + b, ),
 LONG MAIN()(ADD(1,2)),
 
