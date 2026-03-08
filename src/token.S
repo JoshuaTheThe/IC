@@ -73,8 +73,6 @@ _IC_NL: call    _IC_R
         addq    %rax,   %r15
         jmp     _IC_NL
 _IC_NX: unget
-        movq    %r15,   %rdi
-        call    _IC_PX
         return $tok_number
 _IC_ID: unget
         xorq    %r15,   %r15    # LENGTH
