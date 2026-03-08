@@ -40,10 +40,23 @@ _IC_I:    # Initialize function table
         rep     stosq
 
         # Symbols
-        movq    $_IC_LP,        (_FNT + ('(' * 8))
-        movq    $_IC_RP,        (_FNT + (')' * 8))
-        movq    $_IC_EN,        (_FNT + (';' * 8))
-        movq    $_IC_EN,        (_FNT + (',' * 8))
+        movq    $_IC_SYM_LP,        (_FNT + ('(' * 8))
+        movq    $_IC_SYM_RP,        (_FNT + (')' * 8))
+        movq    $_IC_SYM_EN,        (_FNT + (';' * 8))
+        movq    $_IC_SYM_EN,        (_FNT + (',' * 8))
+        movq    $_IC_SYM_AD,        (_FNT + ('+' * 8))
+        movq    $_IC_SYM_SU,        (_FNT + ('-' * 8))
+        movq    $_IC_SYM_AS,        (_FNT + ('*' * 8))
+        movq    $_IC_SYM_SL,        (_FNT + ('/' * 8))
+        movq    $_IC_SYM_PE,        (_FNT + ('%' * 8))
+        movq    $_IC_SYM_AM,        (_FNT + ('&' * 8))
+        movq    $_IC_SYM_CA,        (_FNT + ('^' * 8))
+        movq    $_IC_SYM_PI,        (_FNT + ('|' * 8))
+        movq    $_IC_SYM_BA,        (_FNT + ('!' * 8))
+        movq    $_IC_SYM_LT,        (_FNT + ('<' * 8))
+        movq    $_IC_SYM_GT,        (_FNT + ('>' * 8))
+        movq    $_IC_SYM_EQ,        (_FNT + ('=' * 8))
+        movq    $_IC_SYM_SE,        (_FNT + (':' * 8))
         # Initial Position
         xorl    %eax,   %eax
         movq    %rax,   _P

@@ -24,9 +24,22 @@
         .equ    tok_kw_while,21
         .equ    tok_kw_return,22
 
-_IC_LP: return $tok_lparen
-_IC_RP: return $tok_rparen
-_IC_EN: return $tok_end
+_IC_SYM_AD: return $tok_add
+_IC_SYM_SU: return $tok_sub
+_IC_SYM_AS: return $tok_asterisk
+_IC_SYM_SL: return $tok_slash
+_IC_SYM_PE: return $tok_percent
+_IC_SYM_AM: return $tok_amp
+_IC_SYM_CA: return $tok_caret
+_IC_SYM_PI: return $tok_pipe
+_IC_SYM_BA: return $tok_bang
+_IC_SYM_LT: return $tok_lt
+_IC_SYM_GT: return $tok_gt
+_IC_SYM_EQ: return $tok_eq
+_IC_SYM_SE: return $tok_set
+_IC_SYM_LP: return $tok_lparen
+_IC_SYM_RP: return $tok_rparen
+_IC_SYM_EN: return $tok_end
 
         # IF al is ord(NUMBER), SET carry=FALSE ELSE carry=TRUE
 _IC_IN: cmpb    $48,    %al
