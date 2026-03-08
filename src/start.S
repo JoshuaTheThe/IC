@@ -66,7 +66,7 @@ _IC_I:    # Initialize function table
         movq    %rax,   (_SZ)
         leaq    _PROG,  %r12
 .LL:    # Start grabbing from buffer
-        decq    (_SZ)
+        cmpq    $0, (_SZ)
         jle     _IC_X
         call    _IC_R
         shlq    $3,     %rax
@@ -76,6 +76,7 @@ _IC_I:    # Initialize function table
 _IC_X:  exit    $0
 _IC_R:  movb    (%r12), %al
         movb    %al,    _DC
+        decq    (_SZ)
         incq    %r12
         return  %rax
 _S0:    .asciz " [PANIC] Function is not implemented for symbol\n\00"
