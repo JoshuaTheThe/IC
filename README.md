@@ -17,20 +17,15 @@ LONG Y = X + 7, // one at a time
 LONG ADD(A, B)( A + B, ),
 LONG MAIN()(ADD(1,2)),
 
-LONG p = &x;
-LONG v = *p;
-*p = 99;
+LONG P = &X;
+LONG V = *P;
+*P = 99;
 
-// if — expression, evaluates to branch taken (0 if cond false, no else given)
-IF(!(x - y), then_expr, else_expr)
-
-// while — expression, evaluates to last body value, 0 if never entered
-WHILE(cond, body)
-
-// PEMDAS arithmetic + unary
-x + y * (z - 2)
-!(x)        // logical not — nonzero becomes 0, zero becomes 1
-&x  *x      // address-of, dereference
+IF(X == Y, then_expr, else_expr)
+WHILE(C, B)
+X + Y * (Z - 2)
+!(X)        // logical not — nonzero becomes 0, zero becomes 1
+&X  *X      // address-of, dereference
 ```
 
 **Everything is an expression. Statements are expressions followed by `;`.**
