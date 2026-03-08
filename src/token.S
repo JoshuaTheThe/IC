@@ -88,7 +88,7 @@ _IC_IL: call    _IC_R
         # Accumulate
         movb    %al,    _ID(%r15)
         incb    %r15b
-        cmpb    $254,   %r15b
+        cmpb    $31,   %r15b
         jb      _IC_IL
 _IC_IDX:unget
         # You could probably roll this into a loop

@@ -108,7 +108,7 @@ _ICSAVE:.space  8
 _P:     .quad   00
 _FNT:   .space  2048
 _DC:    .byte   00
-_ID:    .space  256
+_ID:    .space  32
 _SZ:    .space  8
 _PROG:  .space 4096 # MAX PROGRAM SIZE
 _PXBUF: .space  16
