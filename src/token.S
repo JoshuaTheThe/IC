@@ -94,7 +94,7 @@ _IC_IDX:unget
         # You could probably roll this into a loop
         # oh well
         # COMPARE WITH KEYWORDS
-        cmpq    $4,     %r11
+        cmpq    $4,     %r15
         jne     .M0
         leaq    _ID,    %rdi
         leaq    _KLONG, %rsi
@@ -103,7 +103,7 @@ _IC_IDX:unget
         repe    cmpsb
         retucc z,$tok_kw_long
 .M0:    # EARLY NEXT
-        cmpq    $2,     %r11
+        cmpq    $2,     %r15
         jne     .M1
         leaq    _ID,    %rdi
         leaq    _KIF,   %rsi
@@ -112,7 +112,7 @@ _IC_IDX:unget
         repe    cmpsb
         retucc z,$tok_kw_if
 .M1:    # EARLY NEXT
-        cmpq    $5,     %r11
+        cmpq    $5,     %r15
         jne     .M2
         leaq    _ID,    %rdi
         leaq    _KWHILE,   %rsi
@@ -121,7 +121,7 @@ _IC_IDX:unget
         repe    cmpsb
         retucc z,$tok_kw_while
 .M2:    # EARLY NEXT
-        cmpq    $6,     %r11
+        cmpq    $6,     %r15
         jne     .M3
         leaq    _ID,    %rdi
         leaq    _KRETUR,   %rsi

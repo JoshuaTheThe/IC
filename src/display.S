@@ -2,7 +2,7 @@
         # DISPLAY LIBRARY, TO PRINT NUMBERS AND STRINGS TO THE CONSOLE
 
         # Panic
-_IC_P:  write   $stdout, (_S0), $(_S0E-_S0)
+_IC_P:  write   $stderr, (_S0), $(_S0E-_S0)
 _IC_PH: return  %rax
 
 _IC_PX: movq    %rdi,   %rbx
@@ -20,5 +20,5 @@ _IC_PX: movq    %rdi,   %rbx
         addl    $4,     %ecx
         decl    %edx
         jns     .LPX
-        write   $stdout, _PXBUF, $16
+        write   $stderr, _PXBUF, $16
         ret

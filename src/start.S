@@ -9,6 +9,7 @@
         .include "token.S"
         .include "parser.S"
         .include "display.S"
+        .include "dbg.S"
         .global _IC_I
         .section .text
 _IC_I:    # Initialize function table
@@ -70,6 +71,7 @@ _IC_I:    # Initialize function table
         call    _IC_R
         shlq    $3,     %rax
         call    *_FNT(%rax)
+        call    _IC_DBG
         jmp     .LL
 _IC_X:  exit    $0
 _IC_R:  movb    (%r12), %al
@@ -83,7 +85,26 @@ _KIF:   .asciz "IF\00"
 _KWHILE:.asciz "WHILE\00"
 _KRETUR:.asciz "RETURN\00"
 _HEX:   .asciz "0123456789ABCDEF"
+_RNMS:  .ascii  "rax     "
+        .ascii  "rbx     "
+        .ascii  "rcx     "
+        .ascii  "rdx     "
+        .ascii  "rsi     "
+        .ascii  "rdi     "
+        .ascii  "r8      "
+        .ascii  "r9      "
+        .ascii  "r10     "
+        .ascii  "r11     "
+        .ascii  "r12     "
+        .ascii  "r13     "
+        .ascii  "r14     "
+        .ascii  "r15     "
+_NL:    .byte   '\n'
+        .byte   '\r'
+
         .section .bss
+_REGBUF:.space  112     # 14 * 8
+_ICSAVE:.space  8
 _P:     .quad   00
 _FNT:   .space  2048
 _DC:    .byte   00
