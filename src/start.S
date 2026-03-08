@@ -6,7 +6,8 @@
         #
 
         .include "m.S"
-        .include "tok.S"
+        .include "token.S"
+        .include "parser.S"
         .include "display.S"
         .global _IC_I
         .section .text

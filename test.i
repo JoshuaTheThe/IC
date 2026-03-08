@@ -1,1 +1,1 @@
-long    k;
+LONG    L;
