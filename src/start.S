@@ -16,11 +16,11 @@ _IC_I:    # Initialize function table
 .Linit:
         # Ignore all below or equal to ascii 32(' ')
         movq    $_IC_W,   %rax
-        movq    $32,    %rcx
+        movq    $33,    %rcx
         rep     stosq
         # Some Errors for now
         movq    $_IC_P,   %rax
-        movq    $(48-32),   %rcx
+        movq    $(48-33),   %rcx
         rep     stosq
         # Numbers
         movq    $_IC_N,   %rax
@@ -38,6 +38,12 @@ _IC_I:    # Initialize function table
         movq    $_IC_P,   %rax
         movq    $(256-90),    %rcx
         rep     stosq
+
+        # Symbols
+        movq    $_IC_LP,        (_FNT + ('(' * 8))
+        movq    $_IC_RP,        (_FNT + (')' * 8))
+        movq    $_IC_EN,        (_FNT + (';' * 8))
+        movq    $_IC_EN,        (_FNT + (',' * 8))
         # Initial Position
         xorl    %eax,   %eax
         movq    %rax,   _P

@@ -6,6 +6,10 @@
         .equ    tok_rparen,4
         .equ    tok_end,5 # ,
 
+_IC_LP: return $tok_lparen
+_IC_RP: return $tok_rparen
+_IC_EN: return $tok_end
+
         # IF al is ord(NUMBER), SET carry=FALSE ELSE carry=TRUE
 _IC_IN: cmpb    $48,    %al
         rccsc   l
@@ -20,7 +24,8 @@ _IC_II: cmpb    $65,    %al
         # Whitespace (' ', '\n', '\r', '\a', '\t')
 _IC_W:  return $tok_ignore
         # Number, read while its a number
-_IC_N:  xorq    %r11,   %r11
+_IC_N:  unget
+        xorq    %r11,   %r11
 _IC_NL: call    _IC_R
         bc      e,_IC_NX, %rax
         # Fetch Char
@@ -38,7 +43,8 @@ _IC_NL: call    _IC_R
         jmp     _IC_NL
 _IC_NX: unget
         return $tok_number
-_IC_ID: xorq    %r11,   %r11    # LENGTH
+_IC_ID: unget
+        xorq    %r11,   %r11    # LENGTH
 _IC_IL: call    _IC_R
         bc      e,_IC_IDX, %rax
         # Fetch Char
