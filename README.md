@@ -15,7 +15,7 @@
 LONG X = 42,
 LONG Y = X + 7, // one at a time
 LONG ADD(A, B)( A + B, ),
-LONG MAIN()(ADD(1,2)),
+LONG MAIN()(ADD(1,2),),
 
 LONG P = &X;
 LONG V = *P;
