@@ -1,1 +1,1 @@
-LONG MAIN(V,C)( 69; );
+LONG MAIN()( 69; );
