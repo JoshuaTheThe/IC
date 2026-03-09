@@ -9,3 +9,7 @@ _IC_HASH:
         cmpq    %r11,   %rcx
         jle     .LH
         ret
+        # First Order Expression
+_IC_EXPR:
+        call    _IC_NXT
+        ret

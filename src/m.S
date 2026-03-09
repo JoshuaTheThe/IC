@@ -86,6 +86,7 @@
 .endm
 
 .macro unget
+        incq    (_SZ)
         decq    %r12
 .endm
 

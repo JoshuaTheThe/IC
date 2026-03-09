@@ -34,6 +34,15 @@ _IC_DBG:
         cmpq    $14,    %r13
         jl      .LPR
 
+        cmpq    $tok_number,_REGBUF+0
+        je      .LPRNUM
+        write   $stderr, (_ID), %r15
+        jmp     .LPRNUMEND
+.LPRNUM:
+        movq    _REGBUF+104,    %rdi
+        call    _IC_PX
+.LPRNUMEND:
+        write   $stderr, _NL, $1
         # Restore all registers
         movq    _REGBUF+0, %rax
         movq    _REGBUF+8, %rbx
@@ -49,5 +58,4 @@ _IC_DBG:
         movq    _REGBUF+88, %r13
         movq    _REGBUF+96, %r14
         movq    _REGBUF+104, %r15
-        write   $stderr, (_ID), %r15
         ret

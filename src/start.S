@@ -66,12 +66,8 @@ _IC_I:    # Initialize function table
         movq    %rax,   (_SZ)
         leaq    _PROG,  %r12
 .LL:    # Start grabbing from buffer
-        cmpq    $0, (_SZ)
-        jle     _IC_X
-        call    _IC_R
-        shlq    $3,     %rax
-        call    *_FNT(%rax)
-        call    _IC_DBG
+        # this auto exits
+        call    _IC_EXPR
         jmp     .LL
 _IC_X:  exit    $0
 _IC_R:  movb    (%r12), %al

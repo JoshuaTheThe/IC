@@ -53,7 +53,7 @@ _IC_II: cmpb    $65,    %al
         rccsc   g
         ret
         # Whitespace (' ', '\n', '\r', '\a', '\t')
-_IC_W:  return $tok_ignore
+_IC_W:  return  $tok_ignore
         # Number, read while its a number
 _IC_N:  unget
         xorq    %r15,   %r15
@@ -131,3 +131,19 @@ _IC_IDX:unget
         retucc z,$tok_kw_return
 .M3:    # EARLY NEXT
         return $tok_identifier
+
+_IC_NXT:
+        leaq    _ID,    %rdi
+        movq    $32,    %rcx
+        xorl    %eax,   %eax
+        repe    stosb
+        xorq    %r15,   %r15
+        cmpq    $0, (_SZ)
+        jle     _IC_X
+        call    _IC_R
+        shlq    $3,     %rax
+        call    *_FNT(%rax)
+        testq   %rax,   %rax        # tok_ignore = 0
+        je      _IC_NXT             # skip whitespace transparently
+        call    _IC_DBG
+        ret
