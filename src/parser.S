@@ -128,6 +128,7 @@ _IC_IDENTIFIER:
         je      _IC_CALL
         write   $stdout, _EMIT_PUSH_VAR, $(_EMIT_PUSH_VAR.E - _EMIT_PUSH_VAR)
         movq    %r10,   %rdi
+        movq    $stdout,%r8
         call    _IC_PX
         write   $stdout, _EMIT_RBP, $(_EMIT_RBP.E - _EMIT_RBP)
         ret
@@ -137,6 +138,7 @@ _IC_ASSIGN:
         call    _IC_EXPR
         write   $stdout, _EMIT_POP_VAR, $(_EMIT_POP_VAR.E - _EMIT_POP_VAR)
         movq    %r10,   %rdi
+        movq    $stdout,%r8
         call    _IC_PX
         write   $stdout, _EMIT_RBP, $(_EMIT_RBP.E - _EMIT_RBP)
         ret

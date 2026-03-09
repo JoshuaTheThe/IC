@@ -135,7 +135,7 @@ _EMIT_DEREF:     .ascii  "\tpopq %rax\n\tpushq *%rax\n"
 _EMIT_DEREF.E:
 _EMIT_PUSH_VAR: .ascii  "\tpushq "
 _EMIT_PUSH_VAR.E:
-_EMIT_POP_VAR:  .ascii  "\tpopq "
+_EMIT_POP_VAR:  .ascii  "\tpopq $0x"
 _EMIT_POP_VAR.E:
 _EMIT_RBP:      .ascii  "(%rbp)\n"
 _EMIT_RBP.E:

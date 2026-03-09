@@ -33,6 +33,7 @@ _IC_KEY_LONG_VAR:
         # emit store to slot
         write   $stdout, _EMIT_POP_VAR, $(_EMIT_POP_VAR.E - _EMIT_POP_VAR)
         movswq  _STKOFF,        %rdi
+        movq    $stdout,        %r8
         call    _IC_PX
         write   $stdout, _EMIT_RBP, $(_EMIT_RBP.E - _EMIT_RBP)
         ret
