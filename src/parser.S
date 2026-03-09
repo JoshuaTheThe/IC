@@ -165,7 +165,8 @@ _IC_LPAREN_LOOP:
         je      _IC_LPAREN_LOOP
         cmp     $tok_rparen,    %rax
         je      _IC_LPAREN_DONE
-        jmp     _IC_P
+        # BUG IS HERE
+        jmp     _IC_PP
 _IC_LPAREN_DONE:
         call    _IC_NXT
         ret

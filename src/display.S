@@ -5,8 +5,9 @@
 _IC_P:  call    _IC_DBG
         write   $stderr, (_S0), $(_S0E-_S0)
 _IC_PH: jmp     _IC_PH
-_IC_PP:  write   $stderr, (_S1), $(_S1E-_S1)
-_IC_PPH: jmp    _IC_PPH
+_IC_PP: call    _IC_DBG
+        write   $stderr, (_S1), $(_S1E-_S1)
+_IC_PPH:jmp    _IC_PPH
 
 _IC_PX: movq    %rdi,   %rbx
         movq    $_PXBUF, %rdi
