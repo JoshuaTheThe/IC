@@ -1,5 +1,7 @@
         # KEYWORD PARSING
 _IC_KEY_LONG:
+        #       TODO - IF IDENTIFIER FOLLOWED BY LPAREN, IS FUNCTION
+        #       TODO - SYMBOL TABLE
         call    _IC_NXT
         ret
 _IC_KEY_IF:
