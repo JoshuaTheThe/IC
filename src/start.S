@@ -130,6 +130,8 @@ _EMIT_RET:      .ascii  "\tpopq %rax\n\tret\n"
 _EMIT_RET.E:
 _EMIT_PUSH:     .ascii  "\tpushq $0x"
 _EMIT_PUSH.E:
+_EMIT_DEREF:     .ascii  "\tpopq %rax\n\tpushq *%rax\n"
+_EMIT_DEREF.E:
 _EXPECTED:      .ascii  "Syntax Error is present, Aborting\n"
 _EXPECTED.E:
         .section .bss

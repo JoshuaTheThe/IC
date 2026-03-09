@@ -9,9 +9,6 @@ _IC_EXPR:
         je      _IC_KEY_WHILE
         cmp     $tok_kw_return,   %rax
         je      _IC_KEY_RETURN
-        call    _IC_ASSIGNMENT
-        ret
-_IC_ASSIGNMENT:
         call    _IC_OR
         ret
 _IC_OR:
@@ -66,35 +63,60 @@ _IC_SUB_CHK:
 _IC_ADD_END:
         ret
 _IC_MUL:
-        call    _IC_PRIMARY
+        call    _IC_UNARY
 _IC_MUL_LOOP:
         cmp     $tok_asterisk,  %rax
         jne     _IC_DIV_CHK
         call    _IC_NXT
-        call    _IC_PRIMARY
+        call    _IC_UNARY
         emit_binop _EMIT_IMULQ
         jmp     _IC_MUL_LOOP
 _IC_DIV_CHK:
         cmp     $tok_slash,     %rax
         jne     _IC_MOD_CHK
         call    _IC_NXT
-        call    _IC_PRIMARY
+        call    _IC_UNARY
         emit_binop _EMIT_IDIVQ
         jmp     _IC_MUL_LOOP
 _IC_MOD_CHK:
         cmp     $tok_percent,   %rax
         jne     _IC_MUL_END
         call    _IC_NXT
-        call    _IC_PRIMARY
+        call    _IC_UNARY
         emit_binop _EMIT_MODQ
         jmp     _IC_MUL_LOOP
 _IC_MUL_END:
+        ret
+_IC_UNARY:
+_IC_UNARY_LOOP:
+        cmp     $tok_asterisk,  %rax
+        jne     _IC_ADDR_CHK
+        call    _IC_NXT
+        call    _IC_PRIMARY
+        write   $stdout, _EMIT_DEREF, $(_EMIT_DEREF.E - _EMIT_DEREF)
+        ret
+_IC_ADDR_CHK:
+        cmp     $tok_amp,  %rax
+        jne     _IC_UNARY_END
+        call    _IC_NXT
+        movq    $tok_identifier, %rdi
+        call    _IC_REQUIRE
+        #       TODO! FIND ADDRESS
+        ret
+_IC_UNARY_END:
+        call    _IC_PRIMARY
         ret
 _IC_PRIMARY:
         cmp     $tok_number,    %rax
         je      _IC_NUMBER
         cmp     $tok_lparen,    %rax
         je      _IC_LPAREN
+        cmp     $tok_identifier,%rax
+        je      _IC_IDENTIFIER
+        ret
+_IC_IDENTIFIER:
+        #       TODO! FIND ADDRESS
+        call    _IC_NXT
         ret
 _IC_LPAREN:
 _IC_LPAREN_LOOP:
