@@ -21,8 +21,8 @@ LONG P : &X;
 LONG V : *P;
 *P : 99;
 
-IF(X = Y, (then_expr), (else_expr))
-WHILE(C, (B))
+IF(X = Y)(THEN)(ELSE)
+WHILE(C)(B)
 X + Y * (Z - 2)
 !(X)        // logical not — nonzero becomes 0, zero becomes 1
 &X  *X      // address-of, dereference
