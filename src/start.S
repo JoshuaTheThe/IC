@@ -102,38 +102,35 @@ _RNMS:  .ascii  "rax     "
         .ascii  "r15     "
 _NL:    .byte   '\n'
         .byte   '\r'
-_EMIT_MOD:
-        .ascii  "\txorl %edx, %edx\n\tpopq  %rbx\n\tpopq  %rax\n\tidivq %rbx,%rax\n\tmovq %rdx, %rax\n\tpushq %rax\n"
-_EMIT_MOD.E:
-_EMIT_DIV:
-        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\tidivq %rbx,%rax\n\tpushq %rax\n"
-_EMIT_DIV.E:
-_EMIT_MUL:
-        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\timulq %rbx,%rax\n\tpushq %rax\n"
-_EMIT_MUL.E:
-_EMIT_XOR:
-        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\txorq %rbx,%rax\n\tpushq %rax\n"
-_EMIT_XOR.E:
-_EMIT_OR:
-        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\torq  %rbx,%rax\n\tpushq %rax\n"
-_EMIT_OR.E:
-_EMIT_AND:
-        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\tandq  %rbx,%rax\n\tpushq %rax\n"
-_EMIT_AND.E:
-_EMIT_ADD:
-        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\taddq  %rbx,%rax\n\tpushq %rax\n"
-_EMIT_ADD.E:
-_EMIT_SUB:
-        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\tsubq  %rbx,%rax\n\tpushq %rax\n"
-_EMIT_SUB.E:
-_EMIT_RET:
-        .ascii  "\tpopq  %rax\n\tret\n"
+_EMIT_BINOP_PRE:
+        .ascii  "\tpopq %rbx\n\tpopq %rax\n"
+_EMIT_BINOP_PRE.E:
+_EMIT_BINOP_POST:
+        .ascii  "\tpushq %rax\n"
+_EMIT_BINOP_POST.E:
+
+_EMIT_ADDQ:     .ascii  "\taddq %rbx, %rax\n"
+_EMIT_ADDQ.E:
+_EMIT_SUBQ:     .ascii  "\tsubq %rbx, %rax\n"
+_EMIT_SUBQ.E:
+_EMIT_IMULQ:    .ascii  "\timulq %rbx, %rax\n"
+_EMIT_IMULQ.E:
+_EMIT_IDIVQ:    .ascii  "\txorl %edx,%edx\n\tidivq %rbx\n"
+_EMIT_IDIVQ.E:
+_EMIT_MODQ:     .ascii  "\txorl %edx,%edx\n\tidivq %rbx\n\tmovq %rdx,%rax\n"
+_EMIT_MODQ.E:
+_EMIT_ANDQ:     .ascii  "\tandq %rbx, %rax\n"
+_EMIT_ANDQ.E:
+_EMIT_ORQ:      .ascii  "\torq %rbx, %rax\n"
+_EMIT_ORQ.E:
+_EMIT_XORQ:     .ascii  "\txorq %rbx, %rax\n"
+_EMIT_XORQ.E:
+
+_EMIT_RET:      .ascii  "\tpopq %rax\n\tret\n"
 _EMIT_RET.E:
-_EMIT_PUSH:
-        .ascii  "\tpushq $0x"
+_EMIT_PUSH:     .ascii  "\tpushq $0x"
 _EMIT_PUSH.E:
-_EXPECTED:
-        .ascii  "Syntax Error is present, Aborting\n"
+_EXPECTED:      .ascii  "Syntax Error is present, Aborting\n"
 _EXPECTED.E:
         .section .bss
 _REGBUF:.space  112     # 14 * 8
@@ -147,3 +144,4 @@ _PROG:  .space 4096 # MAX PROGRAM SIZE
 _PXBUF: .space  16
 _PREVPOS:   .quad 0
 _PREVSZ:    .quad 0
+_LBLCNT: .quad 0

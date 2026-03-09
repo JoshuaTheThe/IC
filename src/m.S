@@ -67,6 +67,12 @@
         movq    (_PREVPOS),      %r12
 .endm
 
+.macro emit_binop op
+        write   $stdout, _EMIT_BINOP_PRE,  $(_EMIT_BINOP_PRE.E  - _EMIT_BINOP_PRE)
+        write   $stdout, \op,              $(\op\().E - \op)
+        write   $stdout, _EMIT_BINOP_POST, $(_EMIT_BINOP_POST.E - _EMIT_BINOP_POST)
+.endm
+
         .equ stdin, 0
         .equ stdout, 1
         .equ stderr, 2

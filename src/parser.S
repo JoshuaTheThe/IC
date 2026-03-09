@@ -21,7 +21,7 @@ _IC_OR_LOOP:
         jne     _IC_OR_END
         call    _IC_NXT
         call    _IC_XOR
-        write   $stdout, _EMIT_OR, $(_EMIT_OR.E - _EMIT_OR)
+        emit_binop _EMIT_ORQ
         jmp     _IC_OR_LOOP
 _IC_OR_END:
         ret
@@ -32,7 +32,7 @@ _IC_XOR_LOOP:
         jne     _IC_XOR_END
         call    _IC_NXT
         call    _IC_AND
-        write   $stdout, _EMIT_XOR, $(_EMIT_XOR.E - _EMIT_XOR)
+        emit_binop _EMIT_XORQ
         jmp     _IC_XOR_LOOP
 _IC_XOR_END:
         ret
@@ -43,7 +43,7 @@ _IC_AND_LOOP:
         jne     _IC_AND_END
         call    _IC_NXT
         call    _IC_ADD
-        write   $stdout, _EMIT_AND, $(_EMIT_AND.E - _EMIT_AND)
+        emit_binop _EMIT_ANDQ
         jmp     _IC_AND_LOOP
 _IC_AND_END:
         ret
@@ -54,14 +54,14 @@ _IC_ADD_LOOP:
         jne     _IC_SUB_CHK
         call    _IC_NXT
         call    _IC_MUL
-        write   $stdout, _EMIT_ADD, $(_EMIT_ADD.E - _EMIT_ADD)
+        emit_binop _EMIT_ADDQ
         jmp     _IC_ADD_LOOP
 _IC_SUB_CHK:
         cmp     $tok_sub,       %rax
         jne     _IC_ADD_END
         call    _IC_NXT
         call    _IC_MUL
-        write   $stdout, _EMIT_SUB, $(_EMIT_SUB.E - _EMIT_SUB)
+        emit_binop _EMIT_SUBQ
         jmp     _IC_ADD_LOOP
 _IC_ADD_END:
         ret
@@ -72,21 +72,21 @@ _IC_MUL_LOOP:
         jne     _IC_DIV_CHK
         call    _IC_NXT
         call    _IC_PRIMARY
-        write   $stdout, _EMIT_MUL, $(_EMIT_MUL.E - _EMIT_MUL)
+        emit_binop _EMIT_IMULQ
         jmp     _IC_MUL_LOOP
 _IC_DIV_CHK:
         cmp     $tok_slash,     %rax
         jne     _IC_MOD_CHK
         call    _IC_NXT
         call    _IC_PRIMARY
-        write   $stdout, _EMIT_DIV, $(_EMIT_DIV.E - _EMIT_DIV)
+        emit_binop _EMIT_IDIVQ
         jmp     _IC_MUL_LOOP
 _IC_MOD_CHK:
         cmp     $tok_percent,   %rax
         jne     _IC_MUL_END
         call    _IC_NXT
         call    _IC_PRIMARY
-        write   $stdout, _EMIT_MOD, $(_EMIT_MOD.E - _EMIT_MOD)
+        emit_binop _EMIT_MODQ
         jmp     _IC_MUL_LOOP
 _IC_MUL_END:
         ret
