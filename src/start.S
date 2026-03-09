@@ -15,6 +15,8 @@
 _IC_I:    # Initialize function table
         leaq    _FNT,   %rdi
 .Linit:
+        # Set up Token Function Table
+
         # Ignore all below or equal to ascii 32(' ')
         movq    $_IC_W,   %rax
         movq    $33,    %rcx
@@ -58,6 +60,7 @@ _IC_I:    # Initialize function table
         movq    $_IC_SYM_GT,        (_FNT + ('>' * 8))
         movq    $_IC_SYM_EQ,        (_FNT + ('=' * 8))
         movq    $_IC_SYM_SE,        (_FNT + (':' * 8))
+
         # Initial Position
         xorl    %eax,   %eax
         movq    %rax,   _P
@@ -66,9 +69,10 @@ _IC_I:    # Initialize function table
         movq    %rax,   (_SZ)
         leaq    _PROG,  %r12
 .LL:    # Start grabbing from buffer
-        # this auto exits
+        xorq    %r11,   %r11
         call    _IC_EXPR
-        jmp     .LL
+        cmpq    $0,     (_SZ)
+        jne     .LL
 _IC_X:  exit    $0
 _IC_R:  movb    (%r12), %al
         movb    %al,    _DC
@@ -98,14 +102,45 @@ _RNMS:  .ascii  "rax     "
         .ascii  "r15     "
 _NL:    .byte   '\n'
         .byte   '\r'
-
+_EMIT_MOD:
+        .ascii  "\txorl %edx, %edx\n\tpopq  %rbx\n\tpopq  %rax\n\tidivq  %rbx,%rax\n\tmovq %rdx, %rax\n\tpushq %rax\n"
+_EMIT_MOD.E:
+_EMIT_DIV:
+        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\tidivq  %rbx,%rax\n\tpushq %rax\n"
+_EMIT_DIV.E:
+_EMIT_MUL:
+        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\timulq  %rbx,%rax\n\tpushq %rax\n"
+_EMIT_MUL.E:
+_EMIT_OR:
+        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\torq  %rbx,%rax\n\tpushq %rax\n"
+_EMIT_OR.E:
+_EMIT_AND:
+        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\tandq  %rbx,%rax\n\tpushq %rax\n"
+_EMIT_AND.E:
+_EMIT_ADD:
+        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\taddq  %rbx,%rax\n\tpushq %rax\n"
+_EMIT_ADD.E:
+_EMIT_SUB:
+        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\tsubq  %rbx,%rax\n\tpushq %rax\n"
+_EMIT_SUB.E:
+_EMIT_RET:
+        .ascii  "\tpopq  %rax\n\tret\n"
+_EMIT_RET.E:
+_EMIT_PUSH:
+        .ascii  "\tpushq $0x"
+_EMIT_PUSH.E:
+_EXPECTED:
+        .ascii  "Syntax Error is present, Aborting\n"
+_EXPECTED.E:
         .section .bss
 _REGBUF:.space  112     # 14 * 8
 _ICSAVE:.space  8
 _P:     .quad   00
-_FNT:   .space  2048
+_FNT:   .space  8*256
 _DC:    .byte   00
 _ID:    .space  32
 _SZ:    .space  8
 _PROG:  .space 4096 # MAX PROGRAM SIZE
 _PXBUF: .space  16
+_PREVPOS:   .quad 0
+_PREVSZ:    .quad 0

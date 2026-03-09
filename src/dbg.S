@@ -27,6 +27,7 @@ _IC_DBG:
         write   $stderr, _RNMS(%r14), $8
         # Print value
         movq    _REGBUF(%r14),  %rdi
+        movq    $stderr,        %r8
         call    _IC_PX
         # Newline
         write   $stderr, _NL, $1
@@ -40,6 +41,7 @@ _IC_DBG:
         jmp     .LPRNUMEND
 .LPRNUM:
         movq    _REGBUF+104,    %rdi
+        movq    $stderr,        %r8
         call    _IC_PX
 .LPRNUMEND:
         write   $stderr, _NL, $1

@@ -1,8 +1,3 @@
-.macro calld to
-        movq    \to,    %r13
-        call    *%r13
-.endm
-
 .macro rcc c
         j\c      .Lrcc\@
         jmp      .Lrcce\@
@@ -88,6 +83,12 @@
 .macro unget
         incq    (_SZ)
         decq    %r12
+.endm
+
+.macro unget_tok
+        movq    (_PREVSZ),       %r12
+        movq    %r12,          (_SZ)
+        movq    (_PREVPOS),      %r12
 .endm
 
         .equ stdin, 0

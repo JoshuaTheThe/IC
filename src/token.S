@@ -131,19 +131,29 @@ _IC_IDX:unget
         retucc z,$tok_kw_return
 .M3:    # EARLY NEXT
         return $tok_identifier
-
 _IC_NXT:
-        leaq    _ID,    %rdi
-        movq    $32,    %rcx
-        xorl    %eax,   %eax
-        repe    stosb
-        xorq    %r15,   %r15
-        cmpq    $0, (_SZ)
-        jle     _IC_X
-        call    _IC_R
+        movq    %r12,   %r8
+        decq    %r8
+        movq    %r8,    (_PREVPOS)
+        movq    (_SZ),  %r8
+        incq    %r8
+        movq    %r8,    (_PREVSZ)
+        cmpq    $0,     (_SZ)
+        ja      .LNXT2
+        movq    $tok_ignore,   %rax
+        ret
+.LNXT2: call    _IC_R
         shlq    $3,     %rax
         call    *_FNT(%rax)
-        testq   %rax,   %rax        # tok_ignore = 0
-        je      _IC_NXT             # skip whitespace transparently
+        testq   %rax,   %rax
+        je      _IC_NXT
         call    _IC_DBG
         ret
+_IC_REQUIRE:
+        pushq   %rdi
+        call    _IC_NXT
+        popq    %rdi
+        cmpq    %rax,   %rdi
+        rcc     e
+        write   $stderr, _EXPECTED, $(_EXPECTED.E - _EXPECTED)
+        exit    $1

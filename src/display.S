@@ -20,5 +20,5 @@ _IC_PX: movq    %rdi,   %rbx
         addl    $4,     %ecx
         decl    %edx
         jns     .LPX
-        write   $stderr, _PXBUF, $16
+        write   %r8, _PXBUF, $16
         ret
