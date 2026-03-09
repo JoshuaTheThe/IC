@@ -12,7 +12,7 @@ _IC_EXPR:
         call    _IC_ASSIGNMENT
         ret
 _IC_ASSIGNMENT:
-        call    _IC_ADD
+        call    _IC_OR
         ret
 _IC_OR:
         call    _IC_AND
