@@ -111,6 +111,9 @@ _EMIT_DIV.E:
 _EMIT_MUL:
         .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\timulq %rbx,%rax\n\tpushq %rax\n"
 _EMIT_MUL.E:
+_EMIT_XOR:
+        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\txorq %rbx,%rax\n\tpushq %rax\n"
+_EMIT_XOR.E:
 _EMIT_OR:
         .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\torq  %rbx,%rax\n\tpushq %rax\n"
 _EMIT_OR.E:

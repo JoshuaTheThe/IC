@@ -15,15 +15,26 @@ _IC_ASSIGNMENT:
         call    _IC_OR
         ret
 _IC_OR:
-        call    _IC_AND
+        call    _IC_XOR
 _IC_OR_LOOP:
         cmp     $tok_pipe,      %rax
         jne     _IC_OR_END
         call    _IC_NXT
-        call    _IC_AND
+        call    _IC_XOR
         write   $stdout, _EMIT_OR, $(_EMIT_OR.E - _EMIT_OR)
         jmp     _IC_OR_LOOP
 _IC_OR_END:
+        ret
+_IC_XOR:
+        call    _IC_AND
+_IC_XOR_LOOP:
+        cmp     $tok_caret,     %rax
+        jne     _IC_XOR_END
+        call    _IC_NXT
+        call    _IC_AND
+        write   $stdout, _EMIT_XOR, $(_EMIT_XOR.E - _EMIT_XOR)
+        jmp     _IC_XOR_LOOP
+_IC_XOR_END:
         ret
 _IC_AND:
         call    _IC_ADD
