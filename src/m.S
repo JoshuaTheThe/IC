@@ -31,12 +31,14 @@
 .endm
 
 .macro  write   fd      buf     len
+        pushq   %rax
         xorl    %eax,   %eax
         movb    $1,     %al
         movq    \fd,    %rdi
         leaq    \buf,   %rsi
         movq    \len,   %rdx
         syscall
+        popq    %rax
 .endm
 
 .macro  return v
@@ -53,8 +55,6 @@
         movq    \v,     %rax
         rccsc   \cc
 .endm
-
-
 
 .macro unget
         incq    (_SZ)

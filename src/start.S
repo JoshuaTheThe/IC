@@ -68,8 +68,8 @@ _IC_I:    # Initialize function table
         read    $stdin, (_PROG), $4095
         movq    %rax,   (_SZ)
         leaq    _PROG,  %r12
+        call    _IC_NXT
 .LL:    # Start grabbing from buffer
-        xorq    %r11,   %r11
         call    _IC_EXPR
         cmpq    $0,     (_SZ)
         jne     .LL
@@ -103,13 +103,13 @@ _RNMS:  .ascii  "rax     "
 _NL:    .byte   '\n'
         .byte   '\r'
 _EMIT_MOD:
-        .ascii  "\txorl %edx, %edx\n\tpopq  %rbx\n\tpopq  %rax\n\tidivq  %rbx,%rax\n\tmovq %rdx, %rax\n\tpushq %rax\n"
+        .ascii  "\txorl %edx, %edx\n\tpopq  %rbx\n\tpopq  %rax\n\tidivq %rbx,%rax\n\tmovq %rdx, %rax\n\tpushq %rax\n"
 _EMIT_MOD.E:
 _EMIT_DIV:
-        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\tidivq  %rbx,%rax\n\tpushq %rax\n"
+        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\tidivq %rbx,%rax\n\tpushq %rax\n"
 _EMIT_DIV.E:
 _EMIT_MUL:
-        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\timulq  %rbx,%rax\n\tpushq %rax\n"
+        .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\timulq %rbx,%rax\n\tpushq %rax\n"
 _EMIT_MUL.E:
 _EMIT_OR:
         .ascii  "\tpopq  %rbx\n\tpopq  %rax\n\torq  %rbx,%rax\n\tpushq %rax\n"
