@@ -115,7 +115,43 @@ _IC_PRIMARY:
         je      _IC_IDENTIFIER
         ret
 _IC_IDENTIFIER:
-        #       TODO! FIND ADDRESS
+        call    _IC_SYM_LOOKUP
+        movb    sym_info(%rax), %r11b
+        movswq  sym_off(%rax),  %r10
+        call    _IC_NXT
+        cmp     $tok_set,       %rax
+        je      _IC_ASSIGN
+        cmp     $tok_lparen,    %rax
+        je      _IC_CALL
+        write   $stdout, _EMIT_PUSH_VAR, $(_EMIT_PUSH_VAR.E - _EMIT_PUSH_VAR)
+        movq    %r10,   %rdi
+        call    _IC_PX
+        write   $stdout, _EMIT_RBP, $(_EMIT_RBP.E - _EMIT_RBP)
+        ret
+
+_IC_ASSIGN:
+        call    _IC_NXT
+        call    _IC_EXPR
+        write   $stdout, _EMIT_POP_VAR, $(_EMIT_POP_VAR.E - _EMIT_POP_VAR)
+        movq    %r10,   %rdi
+        call    _IC_PX
+        write   $stdout, _EMIT_RBP, $(_EMIT_RBP.E - _EMIT_RBP)
+        ret
+
+_IC_CALL:
+        xorq    %r9,    %r9
+_IC_CALL_LOOP:
+        call    _IC_NXT
+        cmp     $tok_rparen,    %rax
+        je      _IC_CALL_DONE
+        call    _IC_EXPR
+        incq    %r9
+        cmp     $tok_end,       %rax
+        je      _IC_CALL_LOOP
+_IC_CALL_DONE:
+        write   $stdout, _EMIT_CALL, $(_EMIT_CALL.E - _EMIT_CALL)
+        write   $stdout, _ID, %r11
+        write   $stdout, _NL, $1
         call    _IC_NXT
         ret
 _IC_LPAREN:

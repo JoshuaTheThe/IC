@@ -9,6 +9,7 @@
         .include "token.S"
         .include "parser.S"
         .include "display.S"
+        .include "sym.S"
         .include "dbg.S"
         .global _IC_I
         .section .text
@@ -16,7 +17,7 @@ _IC_I:    # Initialize function table
         leaq    _FNT,   %rdi
 .Linit:
         # Set up Token Function Table
-
+        movq    $16,    _ARGOFF
         # Ignore all below or equal to ascii 32(' ')
         movq    $_IC_W,   %rax
         movq    $33,    %rcx
@@ -126,12 +127,26 @@ _EMIT_ORQ.E:
 _EMIT_XORQ:     .ascii  "\txorq %rbx, %rax\n"
 _EMIT_XORQ.E:
 
-_EMIT_RET:      .ascii  "\tpopq %rax\n\tret\n"
-_EMIT_RET.E:
 _EMIT_PUSH:     .ascii  "\tpushq $0x"
 _EMIT_PUSH.E:
 _EMIT_DEREF:     .ascii  "\tpopq %rax\n\tpushq *%rax\n"
 _EMIT_DEREF.E:
+_EMIT_PUSH_VAR: .ascii  "\tpushq "
+_EMIT_PUSH_VAR.E:
+_EMIT_POP_VAR:  .ascii  "\tpopq "
+_EMIT_POP_VAR.E:
+_EMIT_RBP:      .ascii  "(%rbp)\n"
+_EMIT_RBP.E:
+_EMIT_CALL:     .ascii  "\tcall "
+_EMIT_CALL.E:
+_EMIT_PROLOGUE: .ascii  "\tpushq %rbp\n\tmovq %rsp,%rbp\n"
+_EMIT_PROLOGUE.E:
+_EMIT_EPILOGUE: .ascii  "\tpopq %eax\n\tmovq %rbp, %rsp\n\tpopq %rbp\n\tret\n"
+_EMIT_EPILOGUE.E:
+_EMIT_ALLOC:    .ascii  "\tsubq $8, %rsp\n"
+_EMIT_ALLOC.E:
+_EMIT_COLON:    .ascii  ":\n"
+_EMIT_COLON.E:
 _EXPECTED:      .ascii  "Syntax Error is present, Aborting\n"
 _EXPECTED.E:
         .section .bss
@@ -141,6 +156,7 @@ _P:     .quad   00
 _FNT:   .space  8*256
 _DC:    .byte   00
 _ID:    .space  32
+_IDP:    .space  32
 _SZ:    .space  8
 _PROG:  .space 4096 # MAX PROGRAM SIZE
 _PXBUF: .space  16
@@ -148,4 +164,7 @@ _PREVPOS:   .quad 0
 _PREVSZ:    .quad 0
 _LBLCNT: .quad 0
 _SYMCNT: .quad # Symbol Count
-_SYMTABLE: .space 40 * 256 # Max of 256 symbols, each has a 32 byte name, and 8 byte data
+_SYMTABLE: .space 64 * 256 # Max of 256 symbols, each has a 31 byte name, 1 byte info, 16 bit offset, 16 bit function index, rest unused
+_FUNCNT:    .word   0
+_STKOFF:    .quad   0
+_ARGOFF:    .word   0      # first arg at rbp+16

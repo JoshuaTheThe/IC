@@ -1,1 +1,1 @@
-RETURN (64+64)*128;
+LONG MAIN(V,C)( 69; );
