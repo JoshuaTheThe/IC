@@ -100,8 +100,12 @@ _IC_LPAREN:
         call    _IC_NXT
 _IC_LPAREN_LOOP:
         call    _IC_EXPR
-        cmp     $tok_rparen, %rax
-        jne     _IC_LPAREN_LOOP
+        cmp     $tok_end,       %rax
+        je      _IC_LPAREN_LOOP
+        cmp     $tok_rparen,    %rax
+        je      _IC_LPAREN_DONE
+        jmp     _IC_P
+_IC_LPAREN_DONE:
         call    _IC_NXT
         ret
 _IC_NUMBER:
