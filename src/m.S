@@ -54,31 +54,7 @@
         rccsc   \cc
 .endm
 
-.macro  bc c,a,v0=,v1=,op=testq,preop=,prea=,preb=
 
-.ifnb   \preop
-.ifnb   \prea
-.ifnb   \preb
-        \preop  \prea   \preb
-.else
-        \preop  \prea
-.endif
-.else
-        \preop
-.endif
-.endif
-
-
-.ifb    \v0
-.else
-.ifb    \v1
-        \op     \v0,    \v0
-.else
-        \op     \v0,    \v1
-.endif
-.endif
-        j\c     \a
-.endm
 
 .macro unget
         incq    (_SZ)

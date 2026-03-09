@@ -37,6 +37,12 @@ _IC_DBG:
 
         cmpq    $tok_number,_REGBUF+0
         je      .LPRNUM
+        cmpq    $tok_identifier,_REGBUF+0
+        je      .LPRID
+        cmpq    $tok_kw_long,_REGBUF+0
+        jge     .LPRID
+        jmp     .LPRNUMEND
+.LPRID:
         write   $stderr, (_ID), %r15
         jmp     .LPRNUMEND
 .LPRNUM:

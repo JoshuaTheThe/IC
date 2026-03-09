@@ -58,14 +58,15 @@ _IC_W:  return  $tok_ignore
 _IC_N:  unget
         xorq    %r15,   %r15
 _IC_NL: call    _IC_R
-        bc      e,_IC_NX, %rax
+        testq   %rax,   %rax
+        je      _IC_NX
         # Fetch Char
         xorl    %eax,   %eax
         movb    _DC,    %al
         # Is Number
         call    _IC_IN
         # If non number, exit
-        bc      c,_IC_NX
+        jc      _IC_NX
         # Otherwise, accumulate in R11
         movq    $10,    %rbx
         imulq   %rbx,   %r15
@@ -77,14 +78,15 @@ _IC_NX: unget
 _IC_ID: unget
         xorq    %r15,   %r15    # LENGTH
 _IC_IL: call    _IC_R
-        bc      e,_IC_IDX, %rax
+        testq   %rax,   %rax
+        je      _IC_IDX
         # Fetch Char
         xorl    %eax,   %eax
         movb    _DC,    %al
         # Is Identifier
         call    _IC_II
         # If non number, exit
-        bc      c,_IC_IDX
+        jc      _IC_IDX
         # Accumulate
         movb    %al,    _ID(%r15)
         incb    %r15b
@@ -132,6 +134,10 @@ _IC_IDX:unget
 .M3:    # EARLY NEXT
         return $tok_identifier
 _IC_NXT:
+        leaq    _ID,    %rdi
+        movq    $32,    %rcx
+        xorl    %eax,   %eax
+        repe    stosb
         movq    %r12,   %r8
         decq    %r8
         movq    %r8,    (_PREVPOS)
