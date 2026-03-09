@@ -1,6 +1,8 @@
         .include "keyword.S"
 _IC_EXPR:
         #       EQUIVILENT TO STATEMENT
+        cmp     $tok_end,       %rax
+        je      _IC_EXPR_DONE
         cmp     $tok_kw_long,   %rax
         je      _IC_KEY_LONG
         cmp     $tok_kw_if,   %rax
@@ -10,6 +12,7 @@ _IC_EXPR:
         cmp     $tok_kw_return,   %rax
         je      _IC_KEY_RETURN
         call    _IC_OR
+_IC_EXPR_DONE:
         ret
 _IC_OR:
         call    _IC_XOR

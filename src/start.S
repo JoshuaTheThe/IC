@@ -82,6 +82,8 @@ _IC_R:  movb    (%r12), %al
         return  %rax
 _S0:    .asciz " [PANIC] Function is not implemented for symbol\n\00"
 _S0E:
+_S1:    .asciz " [PANIC] Parser Panicked\n\00"
+_S1E:
 _KLONG: .asciz "LONG\00"
 _KIF:   .asciz "IF\00"
 _KWHILE:.asciz "WHILE\00"

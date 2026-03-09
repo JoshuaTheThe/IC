@@ -12,7 +12,7 @@ _IC_KEY_LONG:
         je      _IC_KEY_LONG_FUN
         cmp     $tok_set,       %rax
         je      _IC_KEY_LONG_VAR
-        jmp     _IC_P
+        jmp     _IC_PP
 
 _IC_KEY_LONG_VAR:
         leaq    _IDP,           %rsi
@@ -54,7 +54,7 @@ _IC_KEY_LONG_ARGS:
         cmp     $tok_rparen,    %rax
         je      _IC_KEY_LONG_BODY
         cmp     $tok_identifier,%rax
-        jne     _IC_P
+        jne     _IC_PP
         movb    $sym_var,       %r11b
         movw    _ARGOFF,        %r10w
         movw    $0,             %r9w
@@ -65,7 +65,7 @@ _IC_KEY_LONG_ARGS:
         je      _IC_KEY_LONG_ARGS
         cmp     $tok_rparen,    %rax
         je      _IC_KEY_LONG_BODY
-        jmp     _IC_P
+        jmp     _IC_PP
 _IC_KEY_LONG_BODY:
         call    _IC_NXT
         call    _IC_EXPR                    # body
