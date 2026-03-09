@@ -97,8 +97,8 @@ _IC_PRIMARY:
         je      _IC_LPAREN
         ret
 _IC_LPAREN:
-        call    _IC_NXT
 _IC_LPAREN_LOOP:
+        call    _IC_NXT
         call    _IC_EXPR
         cmp     $tok_end,       %rax
         je      _IC_LPAREN_LOOP
