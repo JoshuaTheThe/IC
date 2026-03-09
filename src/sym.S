@@ -23,7 +23,7 @@ _IC_SYM_CREATE:
 _IC_SYM_LOOKUP:
         xorq    %rcx,   %rcx
 .LSL:   cmpq    _SYMCNT,        %rcx
-        je      _IC_P
+        je      _IC_PP
         movq    %rcx,   %rdx
         shlq    $6,     %rdx
         leaq    _SYMTABLE(%rdx),%rdi
