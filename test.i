@@ -1,1 +1,1 @@
-LONG MAIN()( 69; );
+LONG MAIN()( LONG K : 2; );

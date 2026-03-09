@@ -163,7 +163,7 @@ _PXBUF: .space  16
 _PREVPOS:   .quad 0
 _PREVSZ:    .quad 0
 _LBLCNT: .quad 0
-_SYMCNT: .quad # Symbol Count
+_SYMCNT: .quad 0 # Symbol Count
 _SYMTABLE: .space 64 * 256 # Max of 256 symbols, each has a 31 byte name, 1 byte info, 16 bit offset, 16 bit function index, rest unused
 _FUNCNT:    .word   0
 _STKOFF:    .quad   0
