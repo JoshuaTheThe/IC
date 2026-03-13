@@ -50,7 +50,8 @@ padd:   call    pmul
         #       TODO - emit add/sub
         popl    %eax
         jmp     1b
-3:      ret
+3:      popl    %eax
+        ret
         #       *,/,% (binary)
 pmul:   call    punary
 1:      pushl   %eax
@@ -64,7 +65,8 @@ pmul:   call    punary
         #       TODO - emit mul/div/mod
         popl    %eax
         jmp     1b
-3:      ret
+3:      popl    %eax
+        ret
 
         #       TODO
 punary: call    pprim
@@ -88,6 +90,9 @@ pbegin: call    next
 pnumber:movl    $1,     %ebx
         leal    dpush,  %ecx
         movl    $6,     %edx
+        call    fdprint
+        leal    dimm,  %ecx
+        movl    $2,     %edx
         call    fdprint
         movl    number, %ecx
         call    fdprinx

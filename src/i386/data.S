@@ -12,3 +12,4 @@ nameeip:.ascii  "%eip "
 newline:.ascii  "\n"
 constant10:.long 10
 dpush:  .ascii  "pushl "
+dimm:   .ascii  "0x"
