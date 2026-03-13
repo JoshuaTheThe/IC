@@ -4,6 +4,7 @@
 ## Notice
 - comma and semi colon are aliases of eachother, use whichever you want
 - {} are the same as ()
+- last expression in list does not need a separator
 
 ## Keywords
 - LONG, IF, WHILE, RETURN, ASM
