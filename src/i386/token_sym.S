@@ -1,12 +1,6 @@
         # ----- HEAD
         #       token_sym/S
         # ----- SOURCE
-tknumber:
-        call    unget
-        ret
-tkident:
-        call    unget
-        ret
 tkend:
         movl    $token_sym_end,%eax
         ret
