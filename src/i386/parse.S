@@ -84,7 +84,6 @@ pprim:  cmpl    $token_sym_begi,   %eax
         #cmpl    $token_identifier,%eax
         #       TODO
         #je      hang
-        call    next
         ret
 hang:   jmp     hang
 pnumber:movl    $1,     %ebx
@@ -102,7 +101,10 @@ pnumber:movl    $1,     %ebx
 pbegin: call    next
 1:      cmpb    $token_sym_end, %al
         je      2f
+        cmpb    $token_eof,     %al
+        je      3f
         call    pexpr
         jmp     1b
 2:      call    next
         ret
+3:      jmp     tkpanic

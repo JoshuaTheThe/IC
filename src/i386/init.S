@@ -22,6 +22,7 @@ init:   xorl    %ebp,   %ebp
         movl    $tkident, %eax
         repe    stosl
         #       Symbols
+        movl    $tkeof,   toktab+(0)
         movl    $tkplus,  toktab+('+' * 4)
         movl    $tksubt,  toktab+('-' * 4)
         movl    $tkaste,  toktab+('*' * 4)

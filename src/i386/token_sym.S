@@ -1,6 +1,8 @@
         # ----- HEAD
         #       token_sym/S
         # ----- SOURCE
+tkeof:  movl    $token_eof, %eax
+        ret
 tkend:
         movl    $token_sym_end,%eax
         ret

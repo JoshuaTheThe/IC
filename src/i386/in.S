@@ -6,9 +6,11 @@
         .equ    MAX_SIZE,(65536)
         #       Grab a single character
 get:    xorl    %eax,     %eax
+        cmpl    filesize, %ebp
+        jge     1f
         movb    filedata(%ebp), %al
         inc     %ebp
-        ret
+1:      ret
         #       Trace back by one character
 unget:  xorl    %eax,     %eax
         dec     %ebp

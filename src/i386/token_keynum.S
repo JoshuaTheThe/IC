@@ -26,9 +26,6 @@ tknumber:
         jmp     1b
 2:      call    unget
         movl    %esi,             number
-        #       Debug
-        movl    $2,               %ebx
-        call    fddbg
         movl    $token_number,    %eax
         ret
 tkident:call    unget
@@ -53,7 +50,6 @@ tkident:call    unget
 3:      movl    $max_identifier,  %eax
         subl    %ecx,             %eax
         movl    %eax,             identlen
-        movl    $2,               %ebx
         leal    ident,            %ecx
         movl    identlen,         %edx
         call    fdprintln
@@ -68,20 +64,14 @@ tkident:call    unget
         cmpl    $kw_ASM,          ident
         je      kwasm
         movl    $token_identifier,%eax
-        call    fddbg
         ret
 kwlong: movl    $token_kw_long, %eax
-        call    fddbg
         ret
 kwif:   movl    $token_kw_if,   %eax
-        call    fddbg
         ret
 kwwhil: movl    $token_kw_while,%eax
-        call    fddbg
         ret
 kwretu: movl    $token_kw_ret,  %eax
-        call    fddbg
         ret
 kwasm:  movl    $token_kw_asm,  %eax
-        call    fddbg
         ret
