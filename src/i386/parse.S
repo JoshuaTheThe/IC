@@ -91,6 +91,5 @@ pnumber:movl    $1,     %ebx
         call    fdprint
         movl    number, %ecx
         call    fdprinx
-        xorl    %edx,   %edx
-        call    fdprintln
+        call    fdln
         ret

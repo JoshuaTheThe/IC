@@ -37,6 +37,7 @@ fdprint:pushl   %eax
         ret
 fdprintln:
         call    fdprint
+fdln:
         leal    newline,%ecx
         movl    $1,     %edx
         call    fdprint
