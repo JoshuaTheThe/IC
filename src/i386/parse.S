@@ -19,6 +19,7 @@ pexpr:  cmpb    $token_kw_long,    %al
 por:    call    pxor
 1:      cmpb    $token_sym_pipe,  %al
         jne     2f
+        call    next
         call    pxor
         #       TODO - emit or
         jmp     1b
@@ -27,6 +28,7 @@ por:    call    pxor
 pxor:   call    pand
 1:      cmpb    $token_sym_care,  %al
         jne     2f
+        call    next
         call    pand
         #       TODO - emit xor
         jmp     1b
@@ -35,6 +37,7 @@ pxor:   call    pand
 pand:   call    padd
 1:      cmpb    $token_sym_ampe,  %al
         jne     2f
+        call    next
         call    padd
         #       TODO - emit and
         jmp     1b
@@ -46,7 +49,8 @@ padd:   call    pmul
         je      2f
         cmpb    $token_sym_subt,  %al
         jne     3f
-2:      call    pmul
+2:      call    next
+        call    pmul
         #       TODO - emit add/sub
         popl    %eax
         jmp     1b
@@ -61,32 +65,28 @@ pmul:   call    punary
         je      2f
         cmpb    $token_sym_perc,  %al
         jne     3f
-2:      call    punary
+2:      call    next
+        call    punary
         #       TODO - emit mul/div/mod
         popl    %eax
         jmp     1b
 3:      popl    %eax
         ret
-
         #       TODO
 punary: call    pprim
         ret
 
         #       (..),[0-9][0-9]*,[A-Z][A-Z]*
-pprim:  cmpb    $token_sym_begi,   %al
+pprim:  cmpl    $token_sym_begi,   %eax
         je      pbegin
-        cmpb    $token_number,  %al
+        cmpl    $token_number,  %eax
         je      pnumber
-        cmpb    $token_identifier,%al
+        #cmpl    $token_identifier,%eax
         #       TODO
-        je      hang
-hang:   jmp     hang
-pbegin: call    next
-1:      call    pexpr
-        cmpb    $token_sym_end,     %al
-        jne     1b
+        #je      hang
         call    next
         ret
+hang:   jmp     hang
 pnumber:movl    $1,     %ebx
         leal    dpush,  %ecx
         movl    $6,     %edx
@@ -97,4 +97,12 @@ pnumber:movl    $1,     %ebx
         movl    number, %ecx
         call    fdprinx
         call    fdln
+        call    next
+        ret
+pbegin: call    next
+1:      cmpb    $token_sym_end, %al
+        je      2f
+        call    pexpr
+        jmp     1b
+2:      call    next
         ret

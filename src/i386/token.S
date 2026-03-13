@@ -29,9 +29,13 @@
         #       that being cmpl %rs,    %rd
         .equ    max_identifier,4        
         #       grab next token
-next:   call    get
+next:   #       Clear identifier
+        leal    ident,            %edi
+        movl    $max_identifier,  %ecx
+        xorl    %eax,             %eax
+        repe    stosb
+        call    get
         #       distpatch to function table
         call   *toktab(,%eax,4)
         ret
-tkpanic:call    next
-        ret
+tkpanic:jmp     next

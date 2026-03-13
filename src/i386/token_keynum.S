@@ -24,18 +24,14 @@ tknumber:
         xchgl   %eax,             %esi
         addl    %eax,             %esi
         jmp     1b
-2:      movl    %esi,             number
+2:      call    unget
+        movl    %esi,             number
         #       Debug
         movl    $2,               %ebx
         call    fddbg
         movl    $token_number,    %eax
         ret
 tkident:call    unget
-        #       Clear identifier
-        leal    ident,            %edi
-        movl    $max_identifier,  %ecx
-        xorl    %eax,             %eax
-        repe    stosb
         #       Grab identifier
         leal    ident,            %edi
         movl    $max_identifier,  %ecx
