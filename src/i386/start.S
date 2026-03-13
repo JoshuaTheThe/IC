@@ -9,9 +9,10 @@ _start: andl    $-4,  %esp
         call    loadfil
         call    begin
         #       syscall( EXIT, code )
+        xorl    %ebx,   %ebx
+exit:
         xorl    %eax,   %eax
         incl    %eax
-        xorl    %ebx,   %ebx
         int     $0x80
         .include "begin.S"
         .include "token.S"
