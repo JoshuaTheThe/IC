@@ -23,6 +23,7 @@ loadfil:xorl    %eax,     %eax
         leal    filedata, %ecx    # buffer
         movl    $MAX_SIZE,%edx  # max bytes to read
         int     $0x80
+        incl    %eax
         movl    %eax,     filesize
         ret
         #       Save the token's position

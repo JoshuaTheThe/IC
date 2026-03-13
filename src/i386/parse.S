@@ -1,6 +1,7 @@
         # ----- HEAD
         #       parse/S
         #       Parse a given expression list or expression.
+        #       TODO - add assignment lookup
         # ----- SOURCE
         #       Must have a token already
 pexpr:  cmpb    $token_kw_long,    %al
@@ -21,7 +22,9 @@ por:    call    pxor
         jne     2f
         call    next
         call    pxor
-        #       TODO - emit or
+        leal    dor,   %ecx
+        movl    $13,    %edx
+        call    println
         jmp     1b
 2:      ret
         #       ^ (binary)
@@ -30,7 +33,9 @@ pxor:   call    pand
         jne     2f
         call    next
         call    pand
-        #       TODO - emit xor
+        leal    dxor,   %ecx
+        movl    $14,    %edx
+        call    println
         jmp     1b
 2:      ret
         #       & (binary)
@@ -39,7 +44,9 @@ pand:   call    padd
         jne     2f
         call    next
         call    padd
-        #       TODO - emit and
+        leal    dand,   %ecx
+        movl    $14,    %edx
+        call    println
         jmp     1b
 2:      ret
         #       +,- (binary)
@@ -51,7 +58,6 @@ padd:   call    pmul
         jne     3f
 2:      call    next
         call    pmul
-        #       TODO - emit add/sub
         popl    %ebx
         leal    dbinpre,   %ecx
         movl    $19,    %edx
@@ -62,7 +68,10 @@ padd:   call    pmul
         movl    $14,    %edx
         call    println
         jmp     5f
-4:
+4:      leal    dsub,   %ecx
+        movl    $14,    %edx
+        call    println
+        jmp     1b
 5:      leal    dpusha, %ecx
         movl    $10,    %edx
         call    println
@@ -82,21 +91,35 @@ pmul:   call    punary
         call    punary
         #       TODO - emit mul/div/mod
         popl    %ebx
+        cmpb    $token_sym_aste, %bl
+        jne     4f
+        leal    dmul,  %ecx
+        movl    $9,    %edx
+        call    println
+        jmp     1b
+4:      cmpb    $token_sym_slas, %bl
+        jne     5f
+        leal    ddiv,  %ecx
+        movl    $14,    %edx
+        call    println
+        jmp     1b
+5:      leal    ddiv,  %ecx
+        movl    $14,    %edx
+        call    println
+        leal    dmod,  %ecx
+        movl    $14,    %edx
+        call    println
         jmp     1b
 3:      popl    %ebx
         ret
         #       TODO
 punary: call    pprim
         ret
-
         #       (..),[0-9][0-9]*,[A-Z][A-Z]*
 pprim:  cmpl    $token_sym_begi,   %eax
         je      pbegin
         cmpl    $token_number,  %eax
         je      pnumber
-        #cmpl    $token_identifier,%eax
-        #       TODO
-        #je      hang
         ret
 hang:   jmp     hang
 pnumber:movl    $1,     %ebx
