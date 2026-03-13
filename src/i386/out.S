@@ -74,6 +74,14 @@ print:  pushl   %ebx
         call    fdprint
         popl    %ebx
         ret
+println:pushal
+        call    print
+ln:     leal    newline,%ecx
+        movl    $1,     %edx
+        movl    $1,     %ebx
+        call    fdprint
+        popal
+        ret
         #       error(buf=%ecx,cnt=%edx)
 error:  pushl   %ebx
         xorl    %ebx,   %ebx

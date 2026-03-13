@@ -53,6 +53,19 @@ padd:   call    pmul
         call    pmul
         #       TODO - emit add/sub
         popl    %ebx
+        leal    dbinpre,   %ecx
+        movl    $19,    %edx
+        call    println
+        cmpb    $token_sym_plus,  %bl
+        jne     4f
+        leal    dadd,   %ecx
+        movl    $14,    %edx
+        call    println
+        jmp     5f
+4:
+5:      leal    dpusha, %ecx
+        movl    $10,    %edx
+        call    println
         jmp     1b
 3:      popl    %ebx
         ret
@@ -91,7 +104,7 @@ pnumber:movl    $1,     %ebx
         movl    $6,     %edx
         call    fdprint
         leal    dimm,  %ecx
-        movl    $2,     %edx
+        movl    $3,     %edx
         call    fdprint
         movl    number, %ecx
         call    fdprinx

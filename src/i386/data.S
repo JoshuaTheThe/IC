@@ -12,4 +12,7 @@ nameeip:.ascii  "%eip "
 newline:.ascii  "\n"
 constant10:.long 10
 dpush:  .ascii  "pushl "
-dimm:   .ascii  "0x"
+dimm:   .ascii  "$0x"
+dbinpre:.ascii  "popl %ebx\npopl %eax"
+dadd:   .ascii  "addl %ebx,%eax"
+dpusha: .ascii  "pushl %eax"

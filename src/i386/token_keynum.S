@@ -50,9 +50,6 @@ tkident:call    unget
 3:      movl    $max_identifier,  %eax
         subl    %ecx,             %eax
         movl    %eax,             identlen
-        leal    ident,            %ecx
-        movl    identlen,         %edx
-        call    fdprintln
         cmpl    $kw_LONG,         ident
         je      kwlong
         cmpl    $kw_IF,           ident

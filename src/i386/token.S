@@ -37,7 +37,5 @@ next:   #       Clear identifier
         call    get
         #       distpatch to function table
         call   *toktab(,%eax,4)
-        movl    $2,               %ebx
-        call    fddbg
         ret
 tkpanic:jmp     next
