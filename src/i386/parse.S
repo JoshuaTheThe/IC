@@ -52,9 +52,9 @@ padd:   call    pmul
 2:      call    next
         call    pmul
         #       TODO - emit add/sub
-        popl    %eax
+        popl    %ebx
         jmp     1b
-3:      popl    %eax
+3:      popl    %ebx
         ret
         #       *,/,% (binary)
 pmul:   call    punary
@@ -68,9 +68,9 @@ pmul:   call    punary
 2:      call    next
         call    punary
         #       TODO - emit mul/div/mod
-        popl    %eax
+        popl    %ebx
         jmp     1b
-3:      popl    %eax
+3:      popl    %ebx
         ret
         #       TODO
 punary: call    pprim
