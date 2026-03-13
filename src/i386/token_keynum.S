@@ -2,6 +2,11 @@
         #       token_keynum.S
         #       tokenise numbers, keywords and identifiers
         # ----- SOURCE
+        .equ    kw_LONG, 0x474e4f4c    # 'G','N','O','L'
+        .equ    kw_IF,   0x00004649    # 0,0,'F','I'
+        .equ    kw_WHIL, 0x4c494857    # 'L','I','H','W'
+        .equ    kw_RETU, 0x55544552    # 'U','T','E','R'
+        .equ    kw_ASM,  0x004d5341    # 0,'M','S','A'
 tknumber:
         call    unget
         movl    $0,               number
@@ -44,10 +49,35 @@ tkident:call    unget
 2:      movl    $max_identifier,  %eax
         subl    %ecx,             %eax
         movl    %eax,             identlen
-        call    fddbg
         movl    $2,               %ebx
         leal    ident,            %ecx
         movl    identlen,         %edx
         call    fdprintln
+        cmpl    $kw_LONG,         ident
+        je      kwlong
+        cmpl    $kw_IF,           ident
+        je      kwif
+        cmpl    $kw_WHIL,         ident
+        je      kwwhil
+        cmpl    $kw_RETU,         ident
+        je      kwretu
+        cmpl    $kw_ASM,          ident
+        je      kwasm
         movl    $token_identifier,%eax
+        call    fddbg
+        ret
+kwlong: movl    $token_kw_long, %eax
+        call    fddbg
+        ret
+kwif:   movl    $token_kw_if,   %eax
+        call    fddbg
+        ret
+kwwhil: movl    $token_kw_while,%eax
+        call    fddbg
+        ret
+kwretu: movl    $token_kw_ret,  %eax
+        call    fddbg
+        ret
+kwasm:  movl    $token_kw_asm,  %eax
+        call    fddbg
         ret
