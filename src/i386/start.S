@@ -19,6 +19,7 @@ exit:
         .include "token_sym.S"
         .include "token_keynum.S"
         .include "parse.S"
+        .include "parse_keyword.S"
         .include "init.S"
         .include "out.S"
         .include "in.S"
