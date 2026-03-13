@@ -44,10 +44,10 @@ tkident:call    unget
 2:      movl    $max_identifier,  %eax
         subl    %ecx,             %eax
         movl    %eax,             identlen
-        movl    $token_identifier,%eax
-        movl    $2,               %ebx
         call    fddbg
+        movl    $2,               %ebx
         leal    ident,            %ecx
         movl    identlen,         %edx
         call    fdprintln
+        movl    $token_identifier,%eax
         ret
