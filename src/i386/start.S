@@ -16,6 +16,7 @@ exit:
         int     $0x80
         .include "begin.S"
         .include "token.S"
+        .include "token_sym.S"
         .include "parse.S"
         .include "init.S"
         .include "out.S"
