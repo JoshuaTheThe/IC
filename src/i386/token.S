@@ -36,5 +36,5 @@ next:   call    get
         #       TODO! - inform that an error has occurred
 tkpanic:movl    $2,     %ebx
         call    fddbg
-        jmp     exit
+        call    next
         ret

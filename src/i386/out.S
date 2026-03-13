@@ -35,6 +35,12 @@ fdprint:pushl   %eax
         int     $0x80
         popl    %eax
         ret
+fdprintln:
+        call    fdprint
+        leal    newline,%ecx
+        movl    $1,     %edx
+        call    fdprint
+        ret
         #       fdprinx(fd=%ebx, num=%ecx)
 fdprinx:pushl   %eax
         pushl   %edx
