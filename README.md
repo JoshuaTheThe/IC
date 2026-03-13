@@ -5,7 +5,7 @@
 - comma and semi colon are aliases of eachother, use whichever you want
 
 ## Keywords
-- LONG, IF, WHILE, RETURN
+- LONG, IF, WHILE, RETURN, ASM
 
 ## Symbols
 - to decide whether to call or not is whether the symbol is a function or variable
@@ -36,10 +36,10 @@ X + Y * (Z - 2)
 
 Single-pass, no AST, no IR. Three phases sharing one linear read cursor:
 ```
-[lexer] → token stream → [pratt parser + codegen] → asm text → stdout
+[lexer] → token stream → [parser + codegen] → asm text → stdout
 ```
 
-Written in x86-64 Linux assembly. Output is GAS syntax piped to stdout, assembled externally with `cc` or `as`.
+Written in x64/x86 Linux assembly. Output is GAS syntax piped to stdout, assembled externally with `cc` or `as`.
 
 ## Operators
 | sym | fn |
@@ -60,3 +60,10 @@ Written in x86-64 Linux assembly. Output is GAS syntax piped to stdout, assemble
 
 ## Why?
 - Because assembly is fun!!
+
+## Ammendment 01
+- the compiler must be able to emit code from `ASM` blocks
+
+## Notes
+- if LHS of assignment is a lone identifier, takes its address, otherwise use the value of the expression, for instance (&X + 4) = 2
+

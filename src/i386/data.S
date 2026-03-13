@@ -1,0 +1,12 @@
+        .section .rodata
+hextabl:.ascii  "0123456789abcdef"
+nameeax:.ascii  "%eax "
+nameecx:.ascii  "%ecx "
+nameedx:.ascii  "%edx "
+nameebx:.ascii  "%ebx "
+nameesp:.ascii  "%esp "
+nameebp:.ascii  "%ebp "
+nameesi:.ascii  "%esi "
+nameedi:.ascii  "%edi "
+nameeip:.ascii  "%eip "
+newline:.ascii  "\n"
