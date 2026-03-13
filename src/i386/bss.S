@@ -1,0 +1,2 @@
+        .section .bss
+_bss:
