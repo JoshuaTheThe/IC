@@ -46,7 +46,15 @@ tkident:call    unget
         jg      2f
         stosb
         loop    1b
-2:      movl    $max_identifier,  %eax
+2:      #       >max_identifier, grab and ignore
+        call    get
+        cmpb    $'A',             %al
+        jl      4f
+        cmpb    $'Z',             %al
+        jg      4f
+        jmp     2b
+4:      call    unget
+3:      movl    $max_identifier,  %eax
         subl    %ecx,             %eax
         movl    %eax,             identlen
         movl    $2,               %ebx

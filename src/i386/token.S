@@ -33,8 +33,5 @@ next:   call    get
         #       distpatch to function table
         call   *toktab(,%eax,4)
         ret
-        #       TODO! - inform that an error has occurred
-tkpanic:movl    $2,     %ebx
-        call    fddbg
-        call    next
+tkpanic:call    next
         ret
