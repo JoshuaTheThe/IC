@@ -1,4 +1,4 @@
-        .section .rodata
+        # .section .rodata
 hextabl:.ascii  "0123456789abcdef"
 nameeax:.ascii  "%eax "
 nameecx:.ascii  "%ecx "
