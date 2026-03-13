@@ -1,4 +1,5 @@
-ifeq ($(ARCH),i386)
+ifneq ($(ARCH),i386)
+	ARCH          := i386
 	ARCH_FLAGS    := -m32
 	ARCH_LD_FLAGS := -melf_i386 -e _start
 else
